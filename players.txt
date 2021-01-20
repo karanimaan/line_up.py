@@ -1,0 +1,12 @@
+[
+    {
+        "filename": "Pogba.jpg",
+        "x": 826,
+        "y": 93
+    },
+    {
+        "filename": "Pogba.jpg",
+        "x": 704,
+        "y": 259
+    }
+]
