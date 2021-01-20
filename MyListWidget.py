@@ -19,7 +19,7 @@ class MyListWidget(QListWidget):
         itemPos = QPoint(rect.x(), rect.y())
         imageSize = item.icon().actualSize(QSize(100, 200))
 
-        filename = item.data(self.parentWidget().filenameRole)
+        filename = item.filename
         label = MovableLabel(self.parentWidget(), filename)
         pixmap = QPixmap('Players/' + filename).scaledToHeight(100, QtCore.Qt.SmoothTransformation)
         label.setPixmap(pixmap)

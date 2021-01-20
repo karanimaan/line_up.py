@@ -49,8 +49,7 @@ class MainWindow(QMainWindow):
                 playerName = filename
             if playersIndex is None:
                 item = QListWidgetItem(QIcon(dir + filename), '', listWidget)
-                self.filenameRole = Qt.EditRole
-                item.setData(self.filenameRole, filename)
+                item.filename = filename
             else:
                 pixmap = QPixmap(dir + filename).scaledToHeight(100, Qt.SmoothTransformation)
                 label = MovableLabel(self, filename)

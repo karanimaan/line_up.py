@@ -41,7 +41,7 @@ class MovableLabel(QLabel):
             index = listWidget.indexAt(pos).row()
             icon = QIcon(self.pixmap())
             item = QListWidgetItem(icon, "")
-            item.setData(self.parentWidget().filenameRole, self.filename)
+            item.filename = self.filename
             if index == -1:
                 listWidget.addItem(item)
             else:
