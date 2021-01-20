@@ -18,24 +18,6 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
-        def makeLabel():
-            item = listWidget.currentItem()
-            rect = listWidget.visualItemRect(item)
-            itemPos = QPoint(rect.x(), rect.y())
-            imageSize = item.icon().actualSize(QSize(100, 200))
-
-            listWidget.takeItem(listWidget.currentRow())
-
-            label = MovableLabel(self, 'Pogba.jpg')
-            pixmap = item.icon().pixmap(imageSize)
-            label.setPixmap(pixmap)
-            label.setFixedSize(imageSize)
-            label.move(itemPos)
-            label.grabMouse()
-            label.oldPos = itemPos
-            label.clicked = False
-            label.show()
-
         self.players = []
         pixmap = QPixmap()
 

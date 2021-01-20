@@ -16,7 +16,7 @@ class MyListWidget(QListWidget):
         itemPos = QPoint(rect.x(), rect.y())
         imageSize = item.icon().actualSize(QSize(100, 200))
 
-        self.takeItem(self.currentRow())
+        self.takeItem(self.row(item))
 
         label = MovableLabel(self.parentWidget(), 'Pogba.jpg')
         pixmap = item.icon().pixmap(imageSize)

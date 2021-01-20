@@ -1,12 +1,22 @@
 [
     {
         "filename": "Pogba.jpg",
-        "x": 826,
-        "y": 93
+        "x": 278,
+        "y": 38
     },
     {
         "filename": "Pogba.jpg",
-        "x": 704,
+        "x": 281,
+        "y": 18
+    },
+    {
+        "filename": "Pogba.jpg",
+        "x": 258,
         "y": 259
+    },
+    {
+        "filename": "Pogba.jpg",
+        "x": 220,
+        "y": 417
     }
 ]
