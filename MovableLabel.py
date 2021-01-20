@@ -16,10 +16,12 @@ class MovableLabel(QLabel):
         self.mainWindow = mainWindow
         self.filename = filename
         self.clicked = False
+        self.ogIndex = -1
 
     def mousePressEvent(self, evt):
         """Select the toolbar."""
         self.oldPos = evt.globalPos()
+        self.ogIndex = -1
 
     def mouseMoveEvent(self, evt):
         """Move the toolbar with mouse iteration."""
@@ -38,10 +40,10 @@ class MovableLabel(QLabel):
             pos = listWidget.mapFromGlobal(ev.globalPos())
             index = listWidget.indexAt(pos).row()
             icon = QIcon(self.pixmap())
-            listWidget.insertItem(index, QListWidgetItem(icon, ""))
-
-            self.hide()
-            if self in self.mainWindow.players:
-                self.mainWindow.players.remove(self)
-        if self not in self.mainWindow.players:
-            self.mainWindow.players.append(self)
+            item = QListWidgetItem(icon, "")
+            item.setData(self.parentWidget().filenameRole, self.filename)
+            if index == -1:
+                listWidget.addItem(item)
+            else:
+                listWidget.insertItem(index, item)
+            self.setParent(None)

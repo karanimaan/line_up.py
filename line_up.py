@@ -1,10 +1,11 @@
 import json
 import os
+import re
 import sys
 
 from PyQt5 import QtGui
 from PyQt5.Qt import QPixmap
-from PyQt5.QtCore import QPoint, Qt, QSize
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidget, QListWidgetItem
 
@@ -21,13 +22,13 @@ class MainWindow(QMainWindow):
         self.players = []
         pixmap = QPixmap()
 
-        listWidget = MyListWidget(self)
+        listWidget = MyListWidget()
         listWidget.setViewMode(QListWidget.IconMode)
+        listWidget.setIconSize(QSize(79, 100))
         listWidget.setFixedSize(500, 700)
-        listWidget.setIconSize(QSize(100, 200))
         listWidget.setDragDropMode(listWidget.InternalMove)
         listWidget.setFocusPolicy(Qt.NoFocus) #Why no work?
-        self.listWidget = listWidget
+        listWidget.setParent(self)
 
         '''json file contains positions of "outfield" players'''
         try:
@@ -37,13 +38,19 @@ class MainWindow(QMainWindow):
             data = []
 
         dir = 'Players/'
+        #dir = r'C:\Users\abrah\Downloads\Players\\'
 
         for filename in os.listdir(dir):
             playersIndex = next((i for i, player in enumerate(data) if player['filename'] ==
                                  filename), None)
-            playersIndex = None #Create button to reset @myself
-            if playersIndex == None:
-                item = QListWidgetItem(QIcon(dir + filename), filename, listWidget)
+            try:
+                playerName = filename[filename.rfind('_')+1 : re.search(r'[0-9.]|(_[0-9])', filename).start()]
+            except(AttributeError):
+                playerName = filename
+            if playersIndex is None:
+                item = QListWidgetItem(QIcon(dir + filename), '', listWidget)
+                self.filenameRole = Qt.EditRole
+                item.setData(self.filenameRole, filename)
             else:
                 pixmap = QPixmap(dir + filename).scaledToHeight(100, Qt.SmoothTransformation)
                 label = MovableLabel(self, filename)
@@ -55,10 +62,13 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: black;")
         self.showMaximized()
         self.setAcceptDrops(True)
+        self.listWidget = listWidget
 
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
         with open('players.txt', 'w') as outfile:
-            json.dump([{'filename': player.filename, 'x': player.x(), 'y': player.y()} for player in self.players],
+            player : MovableLabel
+            json.dump([{'filename': player.filename, 'x': player.x(), 'y': player.y()} for player in
+                       self.findChildren(MovableLabel)],
                       outfile, indent= 4)
 
 

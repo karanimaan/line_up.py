@@ -1,22 +1,57 @@
 [
     {
-        "filename": "Pogba.jpg",
-        "x": 278,
-        "y": 38
+        "filename": "p101582.png",
+        "x": 745,
+        "y": 214
     },
     {
-        "filename": "Pogba.jpg",
-        "x": 281,
-        "y": 18
+        "filename": "p141746.png",
+        "x": 874,
+        "y": 147
     },
     {
-        "filename": "Pogba.jpg",
-        "x": 258,
-        "y": 259
+        "filename": "p152590.png",
+        "x": 1159,
+        "y": 381
     },
     {
-        "filename": "Pogba.jpg",
-        "x": 220,
-        "y": 417
+        "filename": "p172649.png",
+        "x": 898,
+        "y": 574
+    },
+    {
+        "filename": "p180184.png",
+        "x": 1013,
+        "y": 206
+    },
+    {
+        "filename": "p180804.png",
+        "x": 799,
+        "y": 434
+    },
+    {
+        "filename": "p197365.png",
+        "x": 959,
+        "y": 436
+    },
+    {
+        "filename": "p220688.png",
+        "x": 980,
+        "y": 43
+    },
+    {
+        "filename": "p40720.png",
+        "x": 771,
+        "y": 40
+    },
+    {
+        "filename": "p62398.png",
+        "x": 881,
+        "y": 311
+    },
+    {
+        "filename": "p106760.png",
+        "x": 603,
+        "y": 396
     }
 ]
