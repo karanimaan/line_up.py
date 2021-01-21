@@ -1,15 +1,11 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QPoint, Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QLabel, QMainWindow, QListWidget, QListWidgetItem
 
 
+# noinspection PyTypeChecker
 class MovableLabel(QLabel):
-    """WToolBar is a personalized toolbar."""
-
-    homeAction = None
-
-    oldPos = QPoint()
 
     def __init__(self, mainWindow: QMainWindow, filename: str):
         super().__init__(mainWindow)
@@ -17,9 +13,14 @@ class MovableLabel(QLabel):
         self.filename = filename
         self.clicked = False
         self.ogIndex = -1
+        self.buttonPressed = Qt.LeftButton  # default
+        self.oldPos = None
 
     def mousePressEvent(self, evt):
         """Select the toolbar."""
+        self.buttonPressed = evt.button()
+        if evt.button() == Qt.RightButton:
+            self.mouseReleaseEvent(evt)
         self.oldPos = evt.globalPos()
         self.ogIndex = -1
 
@@ -36,14 +37,17 @@ class MovableLabel(QLabel):
         self.releaseMouse()
         self.clicked = False
         listWidget: QListWidget = self.mainWindow.listWidget
-        if ev.globalPos().x() < listWidget.width():
+        if ev.globalPos().x() < listWidget.width() or self.buttonPressed == Qt.RightButton:
             pos = listWidget.mapFromGlobal(ev.globalPos())
             index = listWidget.indexAt(pos).row()
+
             icon = QIcon(self.pixmap())
             item = QListWidgetItem(icon, "")
             item.filename = self.filename
+
             if index == -1:
                 listWidget.addItem(item)
             else:
                 listWidget.insertItem(index, item)
+
             self.setParent(None)

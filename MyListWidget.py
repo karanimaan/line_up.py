@@ -1,11 +1,12 @@
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import QPoint, QSize
+from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QListWidget
 
 from MovableLabel import MovableLabel
 
 
+# noinspection PyTypeChecker
 class MyListWidget(QListWidget):
 
     def __init__(self):
@@ -17,7 +18,6 @@ class MyListWidget(QListWidget):
             return
         rect = self.visualItemRect(item)
         itemPos = QPoint(rect.x(), rect.y())
-        imageSize = item.icon().actualSize(QSize(100, 200))
 
         filename = item.filename
         label = MovableLabel(self.parentWidget(), filename)
