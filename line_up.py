@@ -1,19 +1,16 @@
 import json
 import os
-import sys
-from json.decoder import JSONDecodeError
 
-import PyQt5
 from PyQt5 import QtGui
-from PyQt5.Qt import QPixmap
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidget, QListWidgetItem, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QVBoxLayout, QWidget
 
 from MovableLabel import MovableLabel
 from MyListWidget import MyListWidget
 
 
+# noinspection PyTypeChecker
 class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):
@@ -47,12 +44,12 @@ class MainWindow(QMainWindow):
                 players = data['players']
                 playersFilenames = [player['filename'] for player in players]
                 subs = data['subs']
-        except:
-            data = {'players': [], 'subs': []}
-
+        except TypeError:
+            pass
 
         images_directory = 'Players/'
         subs_list = [None] * 7
+        index = -1
 
         for filename in os.listdir(images_directory):
             for group in playersFilenames, subs:
@@ -78,7 +75,6 @@ class MainWindow(QMainWindow):
             if sub is not None:
                 subsListWidget.addItem(sub)
 
-
         # self.setStyleSheet("background-color: black;")
         self.showMaximized()
         self.setAcceptDrops(True)
@@ -91,4 +87,3 @@ class MainWindow(QMainWindow):
             sub: QListWidgetItem
             subs = [sub.filename for sub in self.subsListWidget.findItems('*', Qt.MatchWildcard)]
             json.dump({'players': players, 'subs': subs}, outfile, indent=4)
-

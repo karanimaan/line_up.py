@@ -1,7 +1,8 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QPoint, Qt, QRect
+from PyQt5.QtCore import QPoint, Qt
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QMainWindow, QListWidget, QListWidgetItem
+from PyQt5.QtWidgets import QLabel, QListWidgetItem
+
 
 class MovableLabel(QLabel):
 
@@ -19,7 +20,7 @@ class MovableLabel(QLabel):
         self.setFixedSize(pixmap.width(), pixmap.height())
 
     def __int__(self, mainWindow):
-        self.__init__(mainWindow, None)
+        self.__init__(mainWindow, '')
 
     def mousePressEvent(self, evt):
         """Select the toolbar."""
@@ -41,10 +42,10 @@ class MovableLabel(QLabel):
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         self.releaseMouse()
         self.clicked = False
+        index = -1
 
         if self.buttonPressed == Qt.RightButton:
             listWidget = self.mainWindow.listWidget
-            index = -1
         else:
             from MyListWidget import MyListWidget
             listWidget: MyListWidget

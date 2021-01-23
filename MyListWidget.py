@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QListWidget
 
 from MovableLabel import MovableLabel
 
+
 class MyListWidget(QListWidget):
 
     def __init__(self, window):
@@ -14,7 +15,7 @@ class MyListWidget(QListWidget):
         self.setIconSize(QSize(79, 100))
         self.maximumItems = 30
         from line_up import MainWindow
-        self.window : MainWindow = window
+        self.window: MainWindow = window
 
     def mousePressEvent(self, e: QtGui.QMouseEvent) -> None:
         item = self.itemAt(e.pos())

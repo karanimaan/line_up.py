@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5.QtWidgets import QApplication
 
 import line_up
