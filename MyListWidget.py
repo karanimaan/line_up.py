@@ -16,6 +16,7 @@ class MyListWidget(QListWidget):
         self.maximumItems = 30
         from line_up import MainWindow
         self.window: MainWindow = window
+        self.setFocusPolicy(Qt.NoFocus)
 
     def mousePressEvent(self, e: QtGui.QMouseEvent) -> None:
         item = self.itemAt(e.pos())
