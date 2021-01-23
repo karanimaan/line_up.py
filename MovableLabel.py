@@ -1,20 +1,25 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QPoint, Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QPoint, Qt, QRect
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QLabel, QMainWindow, QListWidget, QListWidgetItem
 
-
-# noinspection PyTypeChecker
 class MovableLabel(QLabel):
 
-    def __init__(self, mainWindow: QMainWindow, filename: str):
+    def __init__(self, mainWindow, filename: str):
         super().__init__(mainWindow)
-        self.mainWindow = mainWindow
+        from line_up import MainWindow
+        self.mainWindow: MainWindow = mainWindow
         self.filename = filename
         self.clicked = False
         self.ogIndex = -1
         self.buttonPressed = Qt.LeftButton  # default
         self.oldPos = None
+        pixmap = QPixmap('Players/' + filename).scaledToHeight(100, Qt.SmoothTransformation)
+        self.setPixmap(pixmap)
+        self.setFixedSize(pixmap.width(), pixmap.height())
+
+    def __int__(self, mainWindow):
+        self.__init__(mainWindow, None)
 
     def mousePressEvent(self, evt):
         """Select the toolbar."""
@@ -36,11 +41,22 @@ class MovableLabel(QLabel):
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         self.releaseMouse()
         self.clicked = False
-        listWidget: QListWidget = self.mainWindow.listWidget
-        if ev.globalPos().x() < listWidget.width() or self.buttonPressed == Qt.RightButton:
-            pos = listWidget.mapFromGlobal(ev.globalPos())
-            index = listWidget.indexAt(pos).row()
 
+        if self.buttonPressed == Qt.RightButton:
+            listWidget = self.mainWindow.listWidget
+            index = -1
+        else:
+            from MyListWidget import MyListWidget
+            listWidget: MyListWidget
+            for listWidget in self.mainWindow.findChildren(MyListWidget):
+                pos = listWidget.mapFromGlobal(ev.globalPos())
+                if listWidget.rect().contains(pos) and listWidget.count() < listWidget.maximumItems:
+                    index = listWidget.indexAt(pos).row()
+                    break
+            else:
+                listWidget = None
+
+        if listWidget is not None:
             icon = QIcon(self.pixmap())
             item = QListWidgetItem(icon, "")
             item.filename = self.filename
