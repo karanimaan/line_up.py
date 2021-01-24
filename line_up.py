@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
                 players = data['players']
                 playersFilenames = [player['filename'] for player in players]
                 subs = data['subs']
-        except TypeError:
+        except:
             pass
 
         images_directory = 'Players/'
@@ -52,6 +52,8 @@ class MainWindow(QMainWindow):
         index = -1
 
         for filename in os.listdir(images_directory):
+            if filename == 'p95658.png':  # Maguire
+                self.setWindowIcon(QIcon(images_directory + filename))
             for group in playersFilenames, subs:
                 try:
                     index = group.index(filename)
@@ -76,8 +78,9 @@ class MainWindow(QMainWindow):
                 subsListWidget.addItem(sub)
 
         # self.setStyleSheet("background-color: black;")
+        # self.setAcceptDrops(True)
         self.showMaximized()
-        self.setAcceptDrops(True)
+        self.setWindowTitle('Team Maguinya')
 
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
         with open('players.txt', 'w') as outfile:
