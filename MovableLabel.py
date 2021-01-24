@@ -18,6 +18,7 @@ class MovableLabel(QLabel):
         pixmap = QPixmap('Players/' + filename).scaledToHeight(100, Qt.SmoothTransformation)
         self.setPixmap(pixmap)
         self.setFixedSize(pixmap.width(), pixmap.height())
+        self.raise_()
 
     def __int__(self, mainWindow):
         self.__init__(mainWindow, '')
@@ -29,6 +30,7 @@ class MovableLabel(QLabel):
             self.mouseReleaseEvent(evt)
         self.oldPos = evt.globalPos()
         self.ogIndex = -1
+        self.raise_()
 
     def mouseMoveEvent(self, evt):
         """Move the toolbar with mouse iteration."""
